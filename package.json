@@ -1,0 +1,11 @@
+{
+  "name": "crearapidai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Luciano Neiman, Martín Israel, Santiago Pascual e Ignacio Salip",
+  "license": "ISC"
+}
