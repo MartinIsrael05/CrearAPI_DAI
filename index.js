@@ -5,15 +5,19 @@ import PizzaService from "./src/services/pizzas-services.js";
 
 const app = express();
 
-const port = 5000;
+const port = 3000;
 
 app.use(cors());
 app.use(express.json());
 
 app.get('/', async (req,res)=>{   
-    let svc = new PizzaService();
-    let respuesta = await svc.getAll();
-    res.send(respuesta);
+    try {
+        let svc = new PizzaService();
+        let respuesta = await svc.getAll();
+        res.send(respuesta);
+    } catch (error) {
+        res.status(404).send("error");
+    }
 })
 
 app.get('/:id', async (req,res)=>{   
@@ -22,9 +26,8 @@ app.get('/:id', async (req,res)=>{
         let respuesta = await svc.getById(req.params.id);
         res.send(respuesta);
     }catch(error){
-        res.send("error");
+        res.status(404).send("error");
     }
-    
 })
 
 app.delete('/delete/:id', async (req,res)=>{   
@@ -34,7 +37,7 @@ app.delete('/delete/:id', async (req,res)=>{
         res.send(respuesta);
         console.log("se borró el objeto");
     }catch(error){
-        res.send("error");
+        res.status(404).send("error");
     }
 })
 
@@ -45,7 +48,7 @@ app.put('/update/:id/:nombre/:libregluten/:importe/:descripcion', async (req,res
         res.send(respuesta);
         res.send("se actualizó el objeto");
     }catch(error){
-        res.send("error");
+        res.status(404).send("error");
     }
 })
 
@@ -56,7 +59,7 @@ app.post('/insert/:nombre/:libregluten/:importe/:descripcion', async (req,res)=>
         res.send(respuesta);
         res.send("se creó el objeto");
     }catch(error){
-        res.send("error");
+        res.status(404).send("error");
     }
 })
 
