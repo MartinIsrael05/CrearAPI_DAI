@@ -9,8 +9,9 @@ const port = 3000;
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static('public'));
 
-app.get('/', async (req,res)=>{   
+app.get('/api/pizzas/', async (req,res)=>{   
     try {
         let svc = new PizzaService();
         let respuesta = await svc.getAll();
@@ -20,7 +21,7 @@ app.get('/', async (req,res)=>{
     }
 })
 
-app.get('/:id', async (req,res)=>{   
+app.get('/api/pizzas/:id', async (req,res)=>{   
     try{
         let svc = new PizzaService();
         let respuesta = await svc.getById(req.params.id);
@@ -30,7 +31,7 @@ app.get('/:id', async (req,res)=>{
     }
 })
 
-app.delete('/delete/:id', async (req,res)=>{   
+app.delete('/api/pizzas/delete/:id', async (req,res)=>{   
     try{
         let svc = new PizzaService();
         let respuesta = await svc.deleteById(req.params.id);
@@ -41,10 +42,11 @@ app.delete('/delete/:id', async (req,res)=>{
     }
 })
 
-app.put('/update/:id/:nombre/:libregluten/:importe/:descripcion', async (req,res)=>{   
+app.put('/api/pizzas/update/', async (req,res)=>{   
     try{
         let svc = new PizzaService();
-        let respuesta = await svc.update(req.params.id, req.params.nombre, req.params.libregluten, req.params.importe, req.params.descripcion);
+        let pizza = req.body;
+        let respuesta = await svc.update(pizza.id, pizza.nombre, pizza.libregluten,pizza.importe, pizza.descripcion);
         res.send(respuesta);
         res.send("se actualizó el objeto");
     }catch(error){
@@ -52,7 +54,7 @@ app.put('/update/:id/:nombre/:libregluten/:importe/:descripcion', async (req,res
     }
 })
 
-app.post('/insert/:nombre/:libregluten/:importe/:descripcion', async (req,res)=>{   
+app.post('/api/pizzas/insert/:nombre/:libregluten/:importe/:descripcion', async (req,res)=>{   
     try{
         let svc = new PizzaService();
         let respuesta = await svc.insert(req.params.nombre, req.params.libregluten, req.params.importe, req.params.descripcion);
