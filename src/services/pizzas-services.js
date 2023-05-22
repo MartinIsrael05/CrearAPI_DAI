@@ -32,16 +32,16 @@ export default class PizzaService {
         return returnEntity;
     }
 
-    insert = async (nombre, libreGluten, importe, descripcion) => {
+    insert = async (pizza) => {
         let returnEntity = null;
         console.log('Estoy en: pizzaService.insert')
         try {
             let pool = await sql.connect(config);
             let result = await pool.request()
-            .input('pNombre', sql.NChar, nombre)
-            .input('pLibreGluten', sql.Bit, libreGluten)
-            .input('pImporte', sql.Float, importe)
-            .input('pDescripcion', sql.NChar, descripcion)
+            .input('pNombre', sql.NChar, pizza.Nombre)
+            .input('pLibreGluten', sql.Bit, pizza.LibreGluten)
+            .input('pImporte', sql.Float, pizza.Importe)
+            .input('pDescripcion', sql.NChar, pizza.Descripcion)
             .query('INSERT INTO Pizzas (Nombre, LibreGluten, Importe, Descripcion) VALUES(@pNombre, @pLibreGluten, @pImporte, @pDescripcion)');
             returnEntity = result.rowsAffected;
         } catch (error){
@@ -50,24 +50,24 @@ export default class PizzaService {
         return returnEntity;
     }
 
-    update = async (id, nombre, libreGluten, importe, descripcion) => {
+    updateById = async (pizza) => {
         let updateReturn = null;
-        console.log('Estoy en: pizzaService.update')
+        console.log('Estoy en: pizzaService.update');
+        console.log(pizza);
         try {
             let pool = await sql.connect(config);
             let result = await pool.request()
-               .input('pId', sql.Int, id)
-               .input('pNombre', sql.VarChar, nombre)
-               .input('pLibreGluten', sql.Bit, libreGluten)
-               .input('pImporte', sql.Float, importe)
-               .input('pDescripcion', sql.VarChar, descripcion)
-               .query('UPDATE Pizzas set Nombre = @pNombre, LibreGluten = @pLibreGluten, Importe = @pImporte, Descripcion = @pDescripcion FROM Pizzas WHERE id = @pId;');
+               .input('pId', sql.Int, pizza.Id)
+               .input('pNombre', sql.NChar, pizza.Nombre)
+               .input('pLibreGluten', sql.Bit, pizza.LibreGluten)
+               .input('pImporte', sql.Float, pizza.Importe)
+               .input('pDescripcion', sql.NChar, pizza.Descripcion)
+               .query('UPDATE Pizzas set Nombre = @pNombre, LibreGluten = @pLibreGluten, Importe = @pImporte, Descripcion = @pDescripcion WHERE id = @pId;');
             updateReturn = result.rowsAffected;
         } catch (error) {
             console.log(error);
         }
         return updateReturn;
-
     }
 
     deleteById = async (id) => {

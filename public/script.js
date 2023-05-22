@@ -29,6 +29,7 @@ function CargarDatosPorId(){
 }
 
 function CargarDatos(){   
+    document.querySelector("#contenedor").innerHTML="";
     console.log("entra a cargar datos");
     url='http://localhost:3000/api/pizzas/';
     axios
@@ -78,19 +79,39 @@ function BorrarPizza(){
 }
 
 function UpdatePizza(){
+    document.querySelector("#contenedor").innerHTML="";
     console.log("entra a update pizza");
     url='http://localhost:3000/api/pizzas/update/';
-    id=document.getElementById('id').value;
-    nombre=document.getElementById('nombre').value;
-    libreGluten=document.getElementById('libreGluten').value;
-    importe=document.getElementById('importe').value;
-    descripcion=document.getElementById('descripcion').value;
-    console.log("gluten: " + libreGluten);
+
+    let id=document.getElementById('id').value;
+    let nombre=document.getElementById('nombre').value;
+    let libreGluten=document.getElementById('libreGluten').value;
+    let importe=document.getElementById('importe').value;
+    let descripcion=document.getElementById('descripcion').value;
+    
+    const params = {
+        "id": id,
+        "nombre": nombre,
+        "libreGluten": libreGluten,
+        "importe": importe,
+        "descripcion": descripcion
+    };
+
+    /*const options = {
+        method: 'PUT',
+        url: 'http://localhost:3000/api/pizzas/update/'+id,
+        headers:
+        {
+            'content-type':'application/json',
+            'X-RapidAPI-Host':'microsoft-translator-text.p.rapidapi.com',
+        },
+        data:params
+    }*/
 
     axios
-        .put(url)
+        .put(url+id,params)
         .then((result)=>{
-
+                console.log(params);
                 document.querySelector("#contenedor").innerHTML+=`
                 <p>Se actualizó la pizza</p>`;
          
@@ -102,15 +123,34 @@ function UpdatePizza(){
 }
 
 function InsertPizza(){
+    document.querySelector("#contenedor").innerHTML="";
     console.log("entra a insert pizza");
-    url='http://localhost:3000/api/pizzas/insert/';
-    nombre=document.getElementById('nombre2').value;
-    libreGluten=document.getElementById('libreGluten2').value;
-    importe=document.getElementById('importe2').value;
-    descripcion=document.getElementById('descripcion2').value;
+    let nombre=document.getElementById('nombre2').value;
+    let libreGluten=document.getElementById('libreGluten2').value;
+    let importe=document.getElementById('importe2').value;
+    let descripcion=document.getElementById('descripcion2').value;
+    console.log(importe);
+
+    const params = ({
+        "nombre": nombre,
+        "libreGluten": libreGluten,
+        "importe": importe,
+        "descripcion": descripcion
+    });
+
+    const options = {
+        method: 'POST',
+        url: 'http://localhost:3000/api/pizzas/insert/',
+        headers:
+        {
+            'content-type':'application/json',
+            'X-RapidAPI-Host':'microsoft-translator-text.p.rapidapi.com',
+        },
+        data:params
+    }
 
     axios
-        .post(url)
+        .request(options)
         .then((result)=>{
 
                 document.querySelector("#contenedor").innerHTML+=`

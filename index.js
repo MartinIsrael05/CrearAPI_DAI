@@ -42,25 +42,27 @@ app.delete('/api/pizzas/delete/:id', async (req,res)=>{
     }
 })
 
-app.put('/api/pizzas/update/', async (req,res)=>{   
+app.put('/api/pizzas/update/:id', async (req,res)=>{   
+    let svc = new PizzaService();
     try{
         let pizza = req.body;
-        let respuesta = await svc.update(pizza.id, pizza.nombre, pizza.libregluten,pizza.importe, pizza.descripcion);
+        let respuesta = await svc.updateById(pizza);
         res.send(respuesta);
-        res.send("se actualizó el objeto");
     }catch(error){
-        res.status(404).send("error");
+        console.log(error);
+        res.send(error);
     }
 })
 
 app.post('/api/pizzas/insert/', async (req,res)=>{   
+    let svc = new PizzaService();
     try{
         let pizza = req.body;
-        let respuesta = await svc.insert(pizza.nombre, pizza.libregluten, pizza.importe, pizza.descripcion);
+        let respuesta = await svc.insert(pizza);
         res.send(respuesta);
-        res.send("se creó el objeto");
     }catch(error){
-        res.status(404).send("error");
+        console.log(error);
+        res.send("error");
     }
 })
 
