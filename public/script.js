@@ -59,7 +59,7 @@ function CargarDatos(){
 function BorrarPizza(){
     document.querySelector("#contenedor").innerHTML="";
     console.log("entra a borrar pizza");
-    url='http://localhost:3000/delete/';
+    url='http://localhost:3000/api/pizzas/delete/';
     id=document.getElementById('idPizzaBorrar').value;
     console.log("id: " + id);
 
@@ -79,15 +79,13 @@ function BorrarPizza(){
 
 function UpdatePizza(){
     console.log("entra a update pizza");
-    url='http://localhost:3000/update/';
+    url='http://localhost:3000/api/pizzas/update/';
     id=document.getElementById('id').value;
     nombre=document.getElementById('nombre').value;
     libreGluten=document.getElementById('libreGluten').value;
     importe=document.getElementById('importe').value;
     descripcion=document.getElementById('descripcion').value;
     console.log("gluten: " + libreGluten);
-
-    url=url+id+'/'+nombre+'/'+libreGluten+'/'+importe+'/'+descripcion
 
     axios
         .put(url)
@@ -105,13 +103,11 @@ function UpdatePizza(){
 
 function InsertPizza(){
     console.log("entra a insert pizza");
-    url='http://localhost:3000/insert/';
+    url='http://localhost:3000/api/pizzas/insert/';
     nombre=document.getElementById('nombre2').value;
     libreGluten=document.getElementById('libreGluten2').value;
     importe=document.getElementById('importe2').value;
     descripcion=document.getElementById('descripcion2').value;
-
-    url=url+nombre+'/'+libreGluten+'/'+importe+'/'+descripcion
 
     axios
         .post(url)

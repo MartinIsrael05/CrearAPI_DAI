@@ -44,7 +44,6 @@ app.delete('/api/pizzas/delete/:id', async (req,res)=>{
 
 app.put('/api/pizzas/update/', async (req,res)=>{   
     try{
-        let svc = new PizzaService();
         let pizza = req.body;
         let respuesta = await svc.update(pizza.id, pizza.nombre, pizza.libregluten,pizza.importe, pizza.descripcion);
         res.send(respuesta);
@@ -54,10 +53,10 @@ app.put('/api/pizzas/update/', async (req,res)=>{
     }
 })
 
-app.post('/api/pizzas/insert/:nombre/:libregluten/:importe/:descripcion', async (req,res)=>{   
+app.post('/api/pizzas/insert/', async (req,res)=>{   
     try{
-        let svc = new PizzaService();
-        let respuesta = await svc.insert(req.params.nombre, req.params.libregluten, req.params.importe, req.params.descripcion);
+        let pizza = req.body;
+        let respuesta = await svc.insert(pizza.nombre, pizza.libregluten, pizza.importe, pizza.descripcion);
         res.send(respuesta);
         res.send("se creó el objeto");
     }catch(error){
