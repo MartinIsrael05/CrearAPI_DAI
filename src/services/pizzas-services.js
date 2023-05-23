@@ -38,10 +38,10 @@ export default class PizzaService {
         try {
             let pool = await sql.connect(config);
             let result = await pool.request()
-            .input('pNombre', sql.NChar, pizza.Nombre)
-            .input('pLibreGluten', sql.Bit, pizza.LibreGluten)
-            .input('pImporte', sql.Float, pizza.Importe)
-            .input('pDescripcion', sql.NChar, pizza.Descripcion)
+            .input('pNombre', sql.NChar, pizza.nombre)
+            .input('pLibreGluten', sql.Bit, pizza.libreGluten)
+            .input('pImporte', sql.Float, pizza.importe)
+            .input('pDescripcion', sql.NChar, pizza.descripcion)
             .query('INSERT INTO Pizzas (Nombre, LibreGluten, Importe, Descripcion) VALUES(@pNombre, @pLibreGluten, @pImporte, @pDescripcion)');
             returnEntity = result.rowsAffected;
         } catch (error){
@@ -57,11 +57,11 @@ export default class PizzaService {
         try {
             let pool = await sql.connect(config);
             let result = await pool.request()
-               .input('pId', sql.Int, pizza.Id)
-               .input('pNombre', sql.NChar, pizza.Nombre)
-               .input('pLibreGluten', sql.Bit, pizza.LibreGluten)
-               .input('pImporte', sql.Float, pizza.Importe)
-               .input('pDescripcion', sql.NChar, pizza.Descripcion)
+               .input('pId', sql.Int, pizza.id)
+               .input('pNombre', sql.NChar, pizza.nombre)
+               .input('pLibreGluten', sql.Bit, pizza.libreGluten)
+               .input('pImporte', sql.Float, pizza.importe)
+               .input('pDescripcion', sql.NChar, pizza.descripcion)
                .query('UPDATE Pizzas set Nombre = @pNombre, LibreGluten = @pLibreGluten, Importe = @pImporte, Descripcion = @pDescripcion WHERE id = @pId;');
             updateReturn = result.rowsAffected;
         } catch (error) {
