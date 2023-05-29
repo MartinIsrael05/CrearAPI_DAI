@@ -1,4 +1,4 @@
-
+/*
 import express from "express";
 import cors from "cors";
 //import Pizza from "./src/models/pizza.js";
@@ -71,4 +71,4 @@ app.post('/api/pizzas/insert/', async (req,res)=>{
 
 app.listen(port, () =>{
     console.log(`La app escucha el puerto ${port}`)
-})
+})*/

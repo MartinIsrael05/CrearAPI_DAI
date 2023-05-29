@@ -13,16 +13,8 @@ function CargarDatosPorId(){
     axios
         .get(url+id)
         .then((result)=>{
+
             displayUnaPizza(result.data);
-            
-            /*document.querySelector("#contenedor").innerHTML+=`
-            <ul>
-                <li>Id: ${result.data.Id}</li>
-                <li>Nombre: ${result.data.Nombre}</li>
-                <li>Libre de gluten: ${result.data.LibreGluten}</li>
-                <li>Importe: $${result.data.Importe}</li>
-                <li>Descripción: ${result.data.Descripcion}</li>
-            </ul>`;*/
             
         })
     .catch((error)=>{
@@ -40,8 +32,8 @@ function CargarDatos(){
 
             displayPizzas(result.data);
             
-            const pizzas = result.data;
-            /*pizzas.map((pizza)=>{
+             /*const pizzas = result.data;
+                pizzas.map((pizza)=>{
                 const{Id,Nombre,LibreGluten,Importe,Descripcion} = pizza;
                 
                 document.querySelector("#contenedor").innerHTML+=`
