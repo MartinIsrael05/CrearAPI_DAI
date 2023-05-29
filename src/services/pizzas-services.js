@@ -50,7 +50,7 @@ export default class PizzaService {
         return returnEntity;
     }
 
-    updateById = async (pizza) => {
+    update = async (pizza) => {
         let updateReturn = null;
         console.log('Estoy en: pizzaService.update');
         console.log(pizza);

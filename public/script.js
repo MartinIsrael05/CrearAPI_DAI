@@ -115,8 +115,7 @@ function UpdatePizza(){
                 else{
                     document.querySelector("#contenedor").innerHTML+=`<p>ERROR. Uno de los campos es inválido</p>`;
                 }
-                
-         
+                         
         })
     
     .catch((error)=>{

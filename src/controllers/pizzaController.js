@@ -8,7 +8,7 @@ const pizzaService = new PizzaService();
 router.get('', async (req, res) => {
   let respuesta;
   const pizzas = await pizzaService.getAll();
-  if (pizza!=null){
+  if (pizzas!=null){
     respuesta = res.status(StatusCodes.OK).json(pizzas);
   } else {
     respuesta = res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Error interno.`);
@@ -32,15 +32,15 @@ router.get('/:id', async (req, res) => {
   return respuesta;
 });
 
-router.post('', async (req, res) => {
+router.post('insert/', async (req, res) => {
   let pizza = req.body;
 
-  const registrosAfectados = await pizzaService.insert(req.body);
+  const registrosAfectados = await pizzaService.insert(pizza);
 
   return res.status(StatusCodes.CREATED).json(registrosAfectados);
 });
 
-router.put('/:id', async (req, res) => {
+router.put('update/:id', async (req, res) => {
   let id    = req.params.id;
   let pizza = req.body;
 
@@ -49,7 +49,7 @@ router.put('/:id', async (req, res) => {
   return res.status(StatusCodes.OK).json(registrosAfectados);
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('delete/:id', async (req, res) => {
   let respuesta;
   let id = req.params.id;
 

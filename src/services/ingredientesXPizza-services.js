@@ -17,14 +17,25 @@ export default class IngredientesXPizzaService {
         return returnAll;
     }
 
-    getById = async (id) => {
+    getById = async (id,obj) => {
         let returnEntity = null;
         console.log('Estoy en: ingredientesXPizzaService.GetById(id)');
         try {
             let pool = await sql.connect(config);
             let result = await pool.request()
                                     .input('pId', sql.Int, id)
-                                    .query('SELECT * FROM Pizzas WHERE id = @pId');
+                                    .query(`SELECT 
+                                    IngredientesXPizzas.Id AS Id,
+                                    Ingredientes.Id	AS IdIngrediente,
+                                    Ingredientes.Nombre	AS Nombre,
+                                    IngredientesXPizzas.Cantidad AS Cantidad,
+                                    Unidades.Id AS IdUnidad,
+                                    Unidades.Nombre AS Unidad
+                                
+                                FROM IngredientesXPizzas
+                                INNER JOIN Ingredientes ON IngredientesXPizzas.IdIngrediente=Ingredientes.Id
+                                INNER JOIN Unidades ON IngredientesXPizzas.IdUnidad=Unidades.Id
+                                WHERE id = @pId`);
             returnEntity = result.recordsets[0][0];
         } catch (error) {
             console.log(error);
