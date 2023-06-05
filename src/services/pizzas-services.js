@@ -50,14 +50,14 @@ export default class PizzaService {
         return returnEntity;
     }
 
-    update = async (pizza) => {
+    update = async (id, pizza) => {
         let updateReturn = null;
         console.log('Estoy en: pizzaService.update');
         console.log(pizza);
         try {
             let pool = await sql.connect(config);
             let result = await pool.request()
-               .input('pId', sql.Int, pizza.id)
+               .input('pId', sql.Int, id)
                .input('pNombre', sql.NChar, pizza.nombre)
                .input('pLibreGluten', sql.Bit, pizza.libreGluten)
                .input('pImporte', sql.Float, pizza.importe)

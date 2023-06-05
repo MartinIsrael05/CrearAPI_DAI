@@ -32,7 +32,7 @@ router.get('/:id', async (req, res) => {
   return respuesta;
 });
 
-router.post('insert/', async (req, res) => {
+router.post('/', async (req, res) => {
   let pizza = req.body;
 
   const registrosAfectados = await pizzaService.insert(pizza);
@@ -40,7 +40,7 @@ router.post('insert/', async (req, res) => {
   return res.status(StatusCodes.CREATED).json(registrosAfectados);
 });
 
-router.put('update/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
   let id    = req.params.id;
   let pizza = req.body;
 
@@ -49,7 +49,7 @@ router.put('update/:id', async (req, res) => {
   return res.status(StatusCodes.OK).json(registrosAfectados);
 });
 
-router.delete('delete/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   let respuesta;
   let id = req.params.id;
 

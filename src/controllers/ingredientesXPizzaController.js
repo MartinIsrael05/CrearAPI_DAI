@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
   if (ingredientesXPizza!=null){
     respuesta = res.status(StatusCodes.OK).json(ingredientesXPizza);
   } else {
-    respuesta = res.status(StatusCodes.NOT_FOUND).send(`No se encontro la Pizza (id:${id}).`);
+    respuesta = res.status(StatusCodes.NOT_FOUND).send(`No se encontro el ingredientePorPizza (id:${id}).`);
   }
 
   return respuesta;
@@ -35,13 +35,13 @@ router.get('/:id', async (req, res) => {
 router.post('', async (req, res) => {
   let ingredientesXPizza = req.body;
 
-  const registrosAfectados = await ingredientesXPizzaService.insert(req.body);
+  const registrosAfectados = await ingredientesXPizzaService.insert(ingredientesXPizza);
 
   return res.status(StatusCodes.CREATED).json(registrosAfectados);
 });
 
 router.put('/:id', async (req, res) => {
-  let id    = req.params.id;
+  let id = req.params.id;
   let ingredientesXPizza = req.body;
 
   const registrosAfectados = await ingredientesXPizzaService.update(id, ingredientesXPizza);

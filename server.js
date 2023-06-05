@@ -14,7 +14,7 @@ app.use('/front', express.static('public'));
 //endpoint de los routers
 
 app.use("/api/pizzas", PizzaRouter);
-app.use("/api/ingredientesXPizzas", IngredientesXPizzaRouter);
+app.use("/api/ingredientesxpizzas", IngredientesXPizzaRouter);
 
 app.listen(port, () => {
   console.log(`"server" escuchando el en el puerto ${port} (http://localhost:${port}/)`);

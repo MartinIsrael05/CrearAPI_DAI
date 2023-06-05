@@ -8,7 +8,17 @@ export default class IngredientesXPizzaService {
         try {
             let pool = await sql.connect(config)
             let result = await pool.request()
-                .query('Select * FROM Pizzas')
+            .query(`SELECT 
+            IngredientesXPizzas.Id AS Id,
+            Ingredientes.Id	AS IdIngrediente,
+            Ingredientes.Nombre	AS Nombre,
+            IngredientesXPizzas.Cantidad AS Cantidad,
+            Unidades.Id AS IdUnidad,
+            Unidades.Nombre AS Unidad
+        
+        FROM IngredientesXPizzas
+        INNER JOIN Ingredientes ON IngredientesXPizzas.IdIngrediente=Ingredientes.Id
+        INNER JOIN Unidades ON IngredientesXPizzas.IdUnidad=Unidades.Id`);
             returnAll = result.recordsets[0];
         }
         catch (error) {
@@ -35,7 +45,7 @@ export default class IngredientesXPizzaService {
                                 FROM IngredientesXPizzas
                                 INNER JOIN Ingredientes ON IngredientesXPizzas.IdIngrediente=Ingredientes.Id
                                 INNER JOIN Unidades ON IngredientesXPizzas.IdUnidad=Unidades.Id
-                                WHERE id = @pId`);
+                                WHERE Ingredientes.id = @pId`);
             returnEntity = result.recordsets[0][0];
         } catch (error) {
             console.log(error);
@@ -43,37 +53,41 @@ export default class IngredientesXPizzaService {
         return returnEntity;
     }
 
-    insert = async (pizza) => {
+    insert = async (ingredientesXPizza) => {
         let returnEntity = null;
         console.log('Estoy en: ingredientesXPizzaService.insert')
         try {
+            if(ingredientesXPizza.idPizza != null)
+            {
             let pool = await sql.connect(config);
             let result = await pool.request()
-            .input('pNombre', sql.NChar, pizza.nombre)
-            .input('pLibreGluten', sql.Bit, pizza.libreGluten)
-            .input('pImporte', sql.Float, pizza.importe)
-            .input('pDescripcion', sql.NChar, pizza.descripcion)
-            .query('INSERT INTO Pizzas (Nombre, LibreGluten, Importe, Descripcion) VALUES(@pNombre, @pLibreGluten, @pImporte, @pDescripcion)');
+
+            .input('pIdPizza', sql.NChar, ingredientesXPizza.idPizza)
+            .input('pIdIngrediente', sql.Bit, ingredientesXPizza.idIngrediente)
+            .input('pCantidad', sql.Float, ingredientesXPizza.cantidad)
+            .input('pIdUnidad', sql.NChar, ingredientesXPizza.idUnidad)
+            .query('INSERT INTO IngredientesXPizzas (IdPizza, IdIngrediente, Cantidad, IdUnidad) VALUES(@pIdPizza, @pIdIngrediente, @pCantidad, @pIdUnidad)');
             returnEntity = result.rowsAffected;
+            } 
         } catch (error){
             console.log(error);
         }
         return returnEntity;
     }
 
-    updateById = async (pizza) => {
+    updateById = async (id, ingredientesXPizza) => {
         let updateReturn = null;
         console.log('Estoy en: ingredientesXPizzaService.update');
-        console.log(pizza);
+        console.log(ingredientesXPizza);
         try {
             let pool = await sql.connect(config);
             let result = await pool.request()
-               .input('pId', sql.Int, pizza.id)
-               .input('pNombre', sql.NChar, pizza.nombre)
-               .input('pLibreGluten', sql.Bit, pizza.libreGluten)
-               .input('pImporte', sql.Float, pizza.importe)
-               .input('pDescripcion', sql.NChar, pizza.descripcion)
-               .query('UPDATE Pizzas set Nombre = @pNombre, LibreGluten = @pLibreGluten, Importe = @pImporte, Descripcion = @pDescripcion WHERE id = @pId;');
+               .input('pId', sql.Int, id)
+               .input('pIdPizza', sql.NChar, ingredientesXPizza.idPizza)
+               .input('pIdIngrediente', sql.Bit, ingredientesXPizza.idIngrediente)
+               .input('pCantidad', sql.Float, ingredientesXPizza.cantidad)
+               .input('pIdUnidad', sql.NChar, ingredientesXPizza.idUnidad)
+               .query('UPDATE IngredientesXPizzas set IdPizza = @pIdPizza, IdIngrediente = @pIdIngrediente, Cantidad = @pCantidad, IdUnidad = @pIdUnidad WHERE id = @pId;');
             updateReturn = result.rowsAffected;
         } catch (error) {
             console.log(error);
@@ -88,7 +102,7 @@ export default class IngredientesXPizzaService {
             let pool = await sql.connect(config);
             let result = await pool.request()
                 .input('pId', sql.Int, id)
-                .query('DELETE FROM Pizzas WHERE id = @pId');
+                .query('DELETE FROM IngredientesXPizzas WHERE id = @pId');
             rowsAffected = result.rowsAffected;
         } catch (error) {
             console.log(error);
