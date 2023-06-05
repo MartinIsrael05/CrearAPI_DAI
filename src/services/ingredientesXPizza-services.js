@@ -57,25 +57,23 @@ export default class IngredientesXPizzaService {
         let returnEntity = null;
         console.log('Estoy en: ingredientesXPizzaService.insert')
         try {
-            if(ingredientesXPizza.idPizza != null)
-            {
             let pool = await sql.connect(config);
             let result = await pool.request()
 
-            .input('pIdPizza', sql.NChar, ingredientesXPizza.idPizza)
-            .input('pIdIngrediente', sql.Bit, ingredientesXPizza.idIngrediente)
-            .input('pCantidad', sql.Float, ingredientesXPizza.cantidad)
-            .input('pIdUnidad', sql.NChar, ingredientesXPizza.idUnidad)
+            .input('pIdPizza', sql.Int, ingredientesXPizza.IdPizza)
+            .input('pIdIngrediente', sql.Int, ingredientesXPizza.IdIngrediente)
+            .input('pCantidad', sql.Int, ingredientesXPizza.Cantidad)
+            .input('pIdUnidad', sql.Int, ingredientesXPizza.IdUnidad)
             .query('INSERT INTO IngredientesXPizzas (IdPizza, IdIngrediente, Cantidad, IdUnidad) VALUES(@pIdPizza, @pIdIngrediente, @pCantidad, @pIdUnidad)');
             returnEntity = result.rowsAffected;
-            } 
+            
         } catch (error){
             console.log(error);
         }
         return returnEntity;
     }
 
-    updateById = async (id, ingredientesXPizza) => {
+    update = async (id, ingredientesXPizza) => {
         let updateReturn = null;
         console.log('Estoy en: ingredientesXPizzaService.update');
         console.log(ingredientesXPizza);
@@ -83,10 +81,10 @@ export default class IngredientesXPizzaService {
             let pool = await sql.connect(config);
             let result = await pool.request()
                .input('pId', sql.Int, id)
-               .input('pIdPizza', sql.NChar, ingredientesXPizza.idPizza)
-               .input('pIdIngrediente', sql.Bit, ingredientesXPizza.idIngrediente)
-               .input('pCantidad', sql.Float, ingredientesXPizza.cantidad)
-               .input('pIdUnidad', sql.NChar, ingredientesXPizza.idUnidad)
+               .input('pIdPizza', sql.Int, ingredientesXPizza.IdPizza)
+               .input('pIdIngrediente', sql.Int, ingredientesXPizza.IdIngrediente)
+               .input('pCantidad', sql.Int, ingredientesXPizza.Cantidad)
+               .input('pIdUnidad', sql.Int, ingredientesXPizza.IdUnidad)
                .query('UPDATE IngredientesXPizzas set IdPizza = @pIdPizza, IdIngrediente = @pIdIngrediente, Cantidad = @pCantidad, IdUnidad = @pIdUnidad WHERE id = @pId;');
             updateReturn = result.rowsAffected;
         } catch (error) {
