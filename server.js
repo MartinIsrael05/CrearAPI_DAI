@@ -7,6 +7,14 @@ import IngredientesXPizzaRouter from "./src/controllers/ingredientesXPizzaContro
 const app  = express();
 const port = 3000;
 
+const horaMiddleware = function (req, res, next) {  
+  console.log('Middleware (Antes): ' + new Date().toISOString());  
+  next(); 
+  console.log('Middleware (Despues): ' + new Date().toISOString()); } 
+app.get('/algo', horaMiddleware , (req, res, next) => {  res.send('Respuesta del EndPoint!'); })
+
+app.use(horaMiddleware);
+
 app.use(cors());
 app.use(express.json());
 app.use('/front', express.static('public'));

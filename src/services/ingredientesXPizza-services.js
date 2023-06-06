@@ -9,16 +9,16 @@ export default class IngredientesXPizzaService {
             let pool = await sql.connect(config)
             let result = await pool.request()
             .query(`SELECT 
-            IngredientesXPizzas.Id AS Id,
-            Ingredientes.Id	AS IdIngrediente,
-            Ingredientes.Nombre	AS Nombre,
-            IngredientesXPizzas.Cantidad AS Cantidad,
-            Unidades.Id AS IdUnidad,
-            Unidades.Nombre AS Unidad
-        
-        FROM IngredientesXPizzas
-        INNER JOIN Ingredientes ON IngredientesXPizzas.IdIngrediente=Ingredientes.Id
-        INNER JOIN Unidades ON IngredientesXPizzas.IdUnidad=Unidades.Id`);
+                        IngredientesXPizzas.Id AS Id,
+                        Ingredientes.Id	AS IdIngrediente,
+                        Ingredientes.Nombre	AS Nombre,
+                        IngredientesXPizzas.Cantidad AS Cantidad,
+                        Unidades.Id AS IdUnidad,
+                        Unidades.Nombre AS Unidad
+                    
+                    FROM IngredientesXPizzas
+                    INNER JOIN Ingredientes ON IngredientesXPizzas.IdIngrediente=Ingredientes.Id
+                    INNER JOIN Unidades ON IngredientesXPizzas.IdUnidad=Unidades.Id`);
             returnAll = result.recordsets[0];
         }
         catch (error) {
@@ -27,26 +27,28 @@ export default class IngredientesXPizzaService {
         return returnAll;
     }
 
-    getById = async (id,obj) => {
+    getByIdPizza = async (idPizza) => {
         let returnEntity = null;
         console.log('Estoy en: ingredientesXPizzaService.GetById(id)');
         try {
             let pool = await sql.connect(config);
             let result = await pool.request()
-                                    .input('pId', sql.Int, id)
+                                    .input('pIdPizza', sql.Int, idPizza)
                                     .query(`SELECT 
-                                    IngredientesXPizzas.Id AS Id,
-                                    Ingredientes.Id	AS IdIngrediente,
-                                    Ingredientes.Nombre	AS Nombre,
-                                    IngredientesXPizzas.Cantidad AS Cantidad,
-                                    Unidades.Id AS IdUnidad,
-                                    Unidades.Nombre AS Unidad
-                                
-                                FROM IngredientesXPizzas
-                                INNER JOIN Ingredientes ON IngredientesXPizzas.IdIngrediente=Ingredientes.Id
-                                INNER JOIN Unidades ON IngredientesXPizzas.IdUnidad=Unidades.Id
-                                WHERE Ingredientes.id = @pId`);
-            returnEntity = result.recordsets[0][0];
+                                            IngredientesXPizzas.Id AS Id,
+                                            Ingredientes.Id	AS IdIngrediente,
+                                            Ingredientes.Nombre	AS Nombre,
+                                            IngredientesXPizzas.Cantidad AS Cantidad,
+                                            Unidades.Id AS IdUnidad,
+                                            Unidades.Nombre AS Unidad
+                                        
+                                        FROM IngredientesXPizzas
+                                        INNER JOIN Ingredientes ON IngredientesXPizzas.IdIngrediente=Ingredientes.Id
+                                        INNER JOIN Unidades ON IngredientesXPizzas.IdUnidad=Unidades.Id
+                                        WHERE IngredientesXPizzas.IdPizza = @pIdPizza`);
+            returnEntity = result.recordsets[0];
+            //HAYQ QUE: INYECTAR A UNIDAD SU ID Y SU NOMBRE, MEDIANTE UNIDADES SERVICE(HAY Q CREARLO)
+            //returnEntity = result.recordset;
         } catch (error) {
             console.log(error);
         }

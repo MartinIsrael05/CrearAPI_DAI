@@ -1,5 +1,8 @@
 import config from '../../dbconfig.js';
 import sql from 'mssql';
+import IngredientesXPizzaService  from './ingredientesXPizza-services.js';
+
+const IxPs = new IngredientesXPizzaService();
 
 export default class PizzaService {
     getAll = async () => {
@@ -26,6 +29,10 @@ export default class PizzaService {
                                     .input('pId', sql.Int, id)
                                     .query('SELECT * FROM Pizzas WHERE id = @pId');
             returnEntity = result.recordsets[0][0];
+
+
+            returnEntity.Ingrediente = await IxPs.getByIdPizza(id);
+
         } catch (error) {
             console.log(error);
         }
