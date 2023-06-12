@@ -16,13 +16,18 @@ export default class IngredientesXPizzaService {
                         Ingredientes.Id	AS IdIngrediente,
                         Ingredientes.Nombre	AS Nombre,
                         IngredientesXPizzas.Cantidad AS Cantidad,
-                        Unidades.Id AS IdUnidad,
+                        Unidades.Id AS Unidad,
                         Unidades.Nombre AS Unidad
                     
                     FROM IngredientesXPizzas
                     INNER JOIN Ingredientes ON IngredientesXPizzas.IdIngrediente=Ingredientes.Id
                     INNER JOIN Unidades ON IngredientesXPizzas.IdUnidad=Unidades.Id`);
             returnAll = result.recordsets[0];
+
+            /*returnAll.forEach(i => {
+                
+                returnAll[result.recordsets[i]].Unidad[i] = Unis.getByIdUnidad(returnEntity[0].IdUnidad);
+            });*/
         }
         catch (error) {
             console.log(error);
@@ -42,7 +47,7 @@ export default class IngredientesXPizzaService {
                                             Ingredientes.Id	AS IdIngrediente,
                                             Ingredientes.Nombre	AS Nombre,
                                             IngredientesXPizzas.Cantidad AS Cantidad,
-                                            Unidades.Id AS IdUnidad,
+                                            Unidades.Id AS Unidad,
                                             Unidades.Nombre AS Unidad
                                         
                                         FROM IngredientesXPizzas
@@ -50,11 +55,12 @@ export default class IngredientesXPizzaService {
                                         INNER JOIN Unidades ON IngredientesXPizzas.IdUnidad=Unidades.Id
                                         WHERE IngredientesXPizzas.IdPizza = @pIdPizza`);
             returnEntity = result.recordsets[0];
-            //foreach result.recordsets.length
-            console.log("ID UNIDAD: " + returnEntity[0].IdUnidad)
 
-            returnEntity[0].Unidad = await Unis.getByIdUnidad(returnEntity[0].IdUnidad);
-            //returnEntity = result.recordset;
+            returnEntity.forEach(i => {
+                
+                returnEntity[result.recordsets[i]].Unidad[i] = Unis.getByIdUnidad(returnEntity[0].IdUnidad);
+            });
+
         } catch (error) {
             console.log(error);
         }

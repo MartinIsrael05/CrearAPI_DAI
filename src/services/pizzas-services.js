@@ -15,6 +15,14 @@ export default class PizzaService {
             let result = await pool.request()
                 .query('Select * FROM Pizzas')
             returnAll = result.recordsets[0];
+
+            /*console.log("ESTO:" + returnAll[0])
+
+            returnAll.forEach(i => {
+                returnAll.Ingrediente[i] = IxPs.getByIdPizza(i);
+            });*/
+
+            
         }
         catch (error) {
             console.log(error);
