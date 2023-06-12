@@ -7,7 +7,7 @@ const config = {
     database : proccess.env.DB_DATABASE,*/
     user : "Pizzas",
     password : "VivaLaMuzza123",
-    server : "A-PHZ2-CEO-19",
+    server : "localhost",
     database : "DAI-Pizzas",
     options : {
         trustServerCertificate: true,

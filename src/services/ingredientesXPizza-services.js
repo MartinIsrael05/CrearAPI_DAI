@@ -1,5 +1,8 @@
 import config from '../../dbconfig.js';
 import sql from 'mssql';
+import UnidadesService  from './unidades-services.js';
+
+const Unis = new UnidadesService();
 
 export default class IngredientesXPizzaService {
     getAll = async () => {
@@ -47,7 +50,10 @@ export default class IngredientesXPizzaService {
                                         INNER JOIN Unidades ON IngredientesXPizzas.IdUnidad=Unidades.Id
                                         WHERE IngredientesXPizzas.IdPizza = @pIdPizza`);
             returnEntity = result.recordsets[0];
-            //HAYQ QUE: INYECTAR A UNIDAD SU ID Y SU NOMBRE, MEDIANTE UNIDADES SERVICE(HAY Q CREARLO)
+            //foreach result.recordsets.length
+            console.log("ID UNIDAD: " + returnEntity[0].IdUnidad)
+
+            returnEntity[0].Unidad = await Unis.getByIdUnidad(returnEntity[0].IdUnidad);
             //returnEntity = result.recordset;
         } catch (error) {
             console.log(error);
