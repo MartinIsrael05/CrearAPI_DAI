@@ -9,12 +9,31 @@ const app  = express();
 const port = 3000;
 
 const horaMiddleware = function (req, res, next) {  
-  console.log('Middleware (Antes): ' + new Date().toISOString());  
+  let tiempo1 = new Date();
+  console.log('Tiempo antes: ' + tiempo1.toISOString());  
   next(); 
-  console.log('Middleware (Despues): ' + new Date().toISOString()); } 
-app.get('/algo', horaMiddleware , (req, res, next) => {  res.send('Respuesta del EndPoint!'); })
+  let tiempo2 = new Date();
+  console.log('Tiempo después: ' + tiempo2.toISOString()); 
+  console.log("Tiempo que tardó: " + (tiempo2 - tiempo1).toString() + " milisegundo/s");
+} 
+
+
+const checkApiKey = function  (req, res, next){
+  if(req.headers.apikey != undefined && req.headers.apikey != null && req.headers.apikey == "123456789"){
+      next();
+  }else{
+      res.status(401).send('NO está autorizado, necesita una ApiKey valida');
+  }
+}
+
+const headerResponse = function (req, res, next){
+  res.set('Created', 'Santiago,Luciano&Martin');
+  next();
+}
 
 app.use(horaMiddleware);
+app.use(checkApiKey);
+app.use(headerResponse);
 
 app.use(cors());
 app.use(express.json());

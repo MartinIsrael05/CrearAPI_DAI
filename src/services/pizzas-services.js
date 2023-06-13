@@ -16,13 +16,15 @@ export default class PizzaService {
                 .query('Select * FROM Pizzas')
             returnAll = result.recordsets[0];
 
-            /*console.log("ESTO:" + returnAll[0])
+            console.log("PRUEBA:" + returnAll[1].Nombre)
 
-            returnAll.forEach(i => {
-                returnAll.Ingrediente[i] = IxPs.getByIdPizza(i);
+            /*returnAll.forEach(i => {
+                returnAll[i].Ingrediente = IxPs.getByIdPizza(i);
             });*/
 
-            
+            returnAll[0].Ingrediente = IxPs.getByIdPizza(0);
+            console.log("Ingrediente: " + IxPs.getByIdPizza(0))
+
         }
         catch (error) {
             console.log(error);
